@@ -243,6 +243,30 @@ section {
   section #main {
     width: 100%;
     height: 100%; }
+    section #main #clickToAdd {
+      width: 300px;
+      height: 300px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -150px;
+      margin-left: -150px;
+      border: 1px solid #212121;
+      border-radius: 5px;
+      display: none; }
+      section #main #clickToAdd img {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -50px;
+        margin-left: -50px; }
+      section #main #clickToAdd #clickToAddSong {
+        position: absolute;
+        bottom: 40px;
+        text-align: center;
+        width: 100%; }
     section #main .bubble {
       width: 200px;
       height: 200px;

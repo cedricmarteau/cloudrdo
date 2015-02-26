@@ -16,20 +16,40 @@ SC.initialize({
 function init(){
   socket.on("currentTrack",function(trackFromNode){
     console.log(trackFromNode)
-    SC.get(api+"/tracks/"+trackFromNode, function(track){
-      currentSound = {
-        track : track,
-        trackID : track.id,
-        title : track.title,
-        artist : track.user.username,
-        duration : track.duration,
-        url : "/tracks/"+trackFromNode
-      };
-      $("#player-title").html(currentSound.title);
-      $("#player-artist").html(currentSound.artist);
-      SC.stream(api+currentSound.url, function(sound){
-        currentSound.sound = sound;
-        handler();
+    if (trackFromNode != null){
+      SC.get(api+"/tracks/"+trackFromNode, function(track){
+        currentSound = {
+          track : track,
+          trackID : track.id,
+          title : track.title,
+          artist : track.user.username,
+          duration : track.duration,
+          url : "/tracks/"+trackFromNode
+        };
+        $("#player-title").html(currentSound.title);
+        $("#player-artist").html(currentSound.artist);
+        SC.stream(api+currentSound.url, function(sound){
+          currentSound.sound = sound;
+          handler();
+        });
+      });
+    }else{
+      $("#clickToAdd").fadeIn();
+    }
+  });
+  socket.on("listTrack",function(array){
+    console.log(array)
+    $.each(array,function(){
+      var self = this;
+      SC.get(api+"/tracks/"+self.id, function(track){
+        var sound = {
+          trackID : track.id,
+          trackArtist : track.user.username,
+          trackTitle : track.title,
+          trackDuration : track.duration,
+          trackVotes : self.trackVotes
+        };
+        addBubble(sound);
       });
     });
   });
@@ -59,10 +79,12 @@ function addPiste(){
           trackID : $(this).data("trackid"),
           trackArtist : $(this).data("trackartist"),
           trackTitle : $(this).data("tracktitle"),
-          trackDuration : $(this).data("trackduration")
+          trackDuration : $(this).data("trackduration"),
+          trackVotes : 1
         };
         addTrackYo(trackClicked)
         addBubble(trackClicked);
+        $("#clickToAdd").fadeOut();
         console.log(trackClicked);
       });
     })
@@ -80,7 +102,7 @@ function returnFalseBubble(){
 
 function addBubble(track){
   var _this = track;
-  $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.trackTitle+" data-trackArtist="+_this.trackArtist+" data-trackDuration="+_this.trackDuration+"><div class='bubble-container'><div class='bubble-artist'>"+_this.trackArtist+"</div><div class='bubble-title'>"+_this.trackTitle+"</div><div class='bubble-vote'>1</div><div class='bubble-vote-action'><em></em><em></em></div></div></div>");
+  $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.trackTitle+" data-trackArtist="+_this.trackArtist+" data-trackDuration="+_this.trackDuration+"><div class='bubble-container'><div class='bubble-artist'>"+_this.trackArtist+"</div><div class='bubble-title'>"+_this.trackTitle+"</div><div class='bubble-vote'>"+_this.trackVotes+"</div><div class='bubble-vote-action'><em></em><em></em></div></div></div>");
   TweenMax.to($(".bubble"),0.5,{
     scale:1,
     ease:Quad.EaseIn
