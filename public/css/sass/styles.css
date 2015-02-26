@@ -244,8 +244,8 @@ section {
     width: 100%;
     height: 100%; }
     section #main .bubble {
-      width: 100px;
-      height: 100px;
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
       position: absolute;
       top: 0;
@@ -292,6 +292,17 @@ section {
         -o-transform: translateX(-50%) translateY(-50%);
         transform: translateX(-50%) translateY(-50%);
         text-align: center; }
+        section #main .bubble .bubble-container .bubble-title {
+          font-weight: 100;
+          margin: 10px 0; }
+        section #main .bubble .bubble-container .bubble-vote-action {
+          height: 50px;
+          width: 50px;
+          position: relative;
+          margin: 10px auto 0;
+          border-radius: 50%;
+          background: #FFEB3B url(../img/like.svg) no-repeat center center;
+          background-size: 30px; }
 
 footer {
   width: 100%;

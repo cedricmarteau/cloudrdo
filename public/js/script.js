@@ -79,11 +79,27 @@ function returnFalseBubble(){
 
 function addBubble(track){
   var _this = track;
-  $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.trackTitle+" data-trackArtist="+_this.trackArtist+" data-trackDuration="+_this.trackDuration+"><div class='bubble-container'><div class='bubble-artist'>"+_this.trackArtist+"</div><div class='bubble-title'>"+_this.trackTitle+"</div><div class='bubble-vote'>1</div></div></div>");
+  $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.trackTitle+" data-trackArtist="+_this.trackArtist+" data-trackDuration="+_this.trackDuration+"><div class='bubble-container'><div class='bubble-artist'>"+_this.trackArtist+"</div><div class='bubble-title'>"+_this.trackTitle+"</div><div class='bubble-vote'>1</div><div class='bubble-vote-action'><em></em><em></em></div></div></div>");
   $("#overlay").hide();
   returnFalseBubble();
+  clickBubble();
   $("#search-result").html("");
   $("#overlay-input").val("");
+}
+
+function clickBubble(){
+  $(".bubble-vote-action").off().on("click",function(e){
+    var $container = $(this).parent().parent();
+    var countVote = $container.find(".bubble-vote").html();
+    $container.find(".bubble-vote").html(countVote++);
+    var trackUpdated = {
+      trackID : $container.data("trackid"),
+      trackArtist : $container.data("trackartist"),
+      trackTitle : $container.data("tracktitle"),
+      trackDuration : $container.data("trackduration")
+    };
+    voteTrackYo(trackUpdated);
+  });
 }
 
 function handler(){
