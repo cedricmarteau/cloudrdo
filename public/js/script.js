@@ -1,4 +1,5 @@
-var socket = io.connect('https://cloudrdo.herokuapp.com/');
+// var socket = io.connect('https://cloudrdo.herokuapp.com/');
+var socket = io.connect('http://localhost');
 var client_id = "45543d60298a07d51ca66c31835dfa26",
     api = "https://api.soundcloud.com";
 
@@ -16,7 +17,7 @@ SC.initialize({
 
 function init(){
   socket.on("currentTrack",function(trackFromNode){
-    console.log(trackFromNode)
+    console.log("currentTrack",trackFromNode)
     if (trackFromNode != null){
       noCurrentSound = false;
       SC.get(api+"/tracks/"+trackFromNode, function(track){
@@ -41,7 +42,7 @@ function init(){
     }
   });
   socket.on("listTrack",function(array){
-    console.log(array)
+    console.log("listTrack",array)
     $.each(array,function(){
       var self = this;
       SC.get(api+"/tracks/"+self.id, function(track){
@@ -156,18 +157,22 @@ function handler(){
 }
 
 function addTrackYo(sound){
+  console.log("addTrackYo",sound)
   socket.emit("addTrack",sound);
 }
 
 function voteTrackYo(sound){
+  console.log("voteTrackYo",sound)
   socket.emit("vote",sound);
 }
 
 function listener(){
   socket.on('updateAdd',function(soundID){
+    console.log("updateAdd_FROM_SERVER",soundID)
     getFromSoundCloud(soundID);
   });
   socket.on('updateTracks',function(soundData){
+    console.log("updateTracks_FROM_SERVER",soundData)
     $("li[data-trackid="+soundData.id+"]").find(".bubble-vote").html(soundData.vote);
   });
 };

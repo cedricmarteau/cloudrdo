@@ -24,27 +24,29 @@ io.sockets.on('connection', function(socket){
   console.log('a user connected');
   socket.emit("listTrack", tracks);
   socket.emit("currentTrack", currentTrack);
-});
-
-io.sockets.on('addTrack', function(data){
-  tracks.push({trackID: data.trackID, trackVotes: 1, trackDuration: data.trackDuration});
-  io.sockets.emit("updateAdd", data.trackID);
-  if (currentTrack === null) //C'est la première chanson ajoutée
-  {
-    currentTrack = data.trackID;
-    setTimeout(chooseNewTrack() , data.trackDuration);
-  }
-});
-
-io.sockets.on('vote', function(id){
-  var tmp;
-  for (var i = 0; i < tracks.length; i++)
-    if (tracks[i].trackID == id)
+  
+  socket.on('addTrack', function(data){
+    console.log("addTrack")
+    tracks.push({trackID: data.trackID, trackVotes: 1, trackDuration: data.trackDuration});
+    io.sockets.emit("updateAdd", data.trackID);
+    if (currentTrack === null) //C'est la première chanson ajoutée
     {
-      tracks[i].trackVotes = tracks[i].trackVotes + 1;
-      tmp = {id: id, vote: tracks[i].trackVotes};
+      currentTrack = data.trackID;
+      setTimeout(chooseNewTrack() , data.trackDuration);
     }
-    io.sockets.emit("updateTracks", tmp);
+  });
+
+  socket.on('vote', function(id){
+    console.log("vote")
+    var tmp;
+    for (var i = 0; i < tracks.length; i++)
+      if (tracks[i].trackID == id)
+      {
+        tracks[i].trackVotes = tracks[i].trackVotes + 1;
+        tmp = {id: id, vote: tracks[i].trackVotes};
+      }
+      io.sockets.emit("updateTracks", tmp);
+  });
 });
 
 server.listen(port, function(){
