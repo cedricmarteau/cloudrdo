@@ -60,6 +60,46 @@ section{
 			top:0;
 			left:0;
 			background-color: #B6B6B6;
+			&:first-child{
+				top:5%;
+				left:5%;
+			}
+			&:nth-child(2){
+				top:15%;
+				left:15%;
+			}
+			&:nth-child(3){
+				top:25%;
+				left:25%;
+			}
+			&:nth-child(4){
+				top:35%;
+				left:35%;
+			}
+			&:nth-child(5){
+				top:45%;
+				left:45%;
+			}
+			&:nth-child(6){
+				top:55%;
+				left:55%;
+			}
+			&:nth-child(7){
+				top:65%;
+				left:65%;
+			}
+			&:nth-child(8){
+				top:75%;
+				left:75%;
+			}
+			&:nth-child(9){
+				top:85%;
+				left:85%;
+			}
+			&:nth-child(10){
+				top:95%;
+				left:95%;
+			}
 		}
 	}
 }
