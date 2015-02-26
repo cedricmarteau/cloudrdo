@@ -36,13 +36,13 @@ function init(){
 
 function addPiste(){
   $("#main").on("click",function(){
-    $("#overlay").show();
+    $("#overlay").fadeIn();
   });
   $("#overlay-main").on("click",function(e){
     e.stopPropagation();
   });
   $("#overlay").on("click",function(){
-    $("#overlay").hide();
+    $("#overlay").fadeOut();
   });
   $("#overlay-submit").on("click",function(){
     $.ajax({
@@ -84,7 +84,7 @@ function addBubble(track){
     scale:1,
     ease:Quad.EaseIn
   });
-  $("#overlay").hide();
+  $("#overlay").fadeOut();
   returnFalseBubble();
   clickBubble();
   $("#search-result").html("");
