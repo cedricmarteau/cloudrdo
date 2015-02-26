@@ -4,6 +4,7 @@ var client_id = "45543d60298a07d51ca66c31835dfa26",
 
 var currentSound = null;
 var alreadyVoted = [];
+var noCurrentSound = false;
 
 init();
 addPiste();
@@ -17,6 +18,7 @@ function init(){
   socket.on("currentTrack",function(trackFromNode){
     console.log(trackFromNode)
     if (trackFromNode != null){
+      noCurrentSound = false;
       SC.get(api+"/tracks/"+trackFromNode, function(track){
         currentSound = {
           track : track,
@@ -34,6 +36,7 @@ function init(){
         });
       });
     }else{
+      noCurrentSound = true;
       $("#clickToAdd").fadeIn();
     }
   });
@@ -113,6 +116,9 @@ function addBubble(track){
   clickBubble();
   $("#search-result").html("");
   $("#overlay-input").val("");
+  if (noCurrentSound){
+    noCurrentSound = false;
+  }
 }
 
 function clickBubble(){
@@ -163,6 +169,15 @@ function listener(){
   });
   socket.on('updateTracks',function(soundData){
     $("li[data-trackid="+soundData.id+"]").find(".bubble-vote").html(soundData.vote);
+  });
+};
+
+function streamFromSoundCloud(soundID){
+  SC.stream(api+"/tracks/"+soundID, function(sound){
+    currentSound.sound = sound;
+    $("#player-title").html(currentSound.sound.title);
+    $("#player-artist").html(currentSound.sound.artist);
+    handler();
   });
 };
 
