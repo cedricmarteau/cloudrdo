@@ -80,6 +80,10 @@ function returnFalseBubble(){
 function addBubble(track){
   var _this = track;
   $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.trackTitle+" data-trackArtist="+_this.trackArtist+" data-trackDuration="+_this.trackDuration+"><div class='bubble-container'><div class='bubble-artist'>"+_this.trackArtist+"</div><div class='bubble-title'>"+_this.trackTitle+"</div><div class='bubble-vote'>1</div><div class='bubble-vote-action'><em></em><em></em></div></div></div>");
+  TweenMax.to($(".bubble"),0.5,{
+    scale:1,
+    ease:Quad.EaseIn
+  });
   $("#overlay").hide();
   returnFalseBubble();
   clickBubble();
@@ -123,7 +127,28 @@ function voteTrackYo(sound){
 }
 
 function listener(){
-  socket.on('updateTracks',function(soundData){
-    console.log(soundData)
+  socket.on('updateAdd',function(soundID){
+    getFromSoundCloud(soundID);
   });
-}
+  socket.on('updateTracks',function(soundData){
+    $("li[data-trackid="+soundData.id+"]").find(".bubble-vote").html(soundData.vote);
+  });
+};
+
+function getFromSoundCloud(soundID){
+  SC.get(api+"/tracks/"+soundID, function(track){
+    var _this = {
+      track : track,
+      trackID : track.id,
+      title : track.title,
+      artist : track.user.username,
+      duration : track.duration,
+      url : "/tracks/"+soundID
+    };
+    $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.trackTitle+" data-trackArtist="+_this.trackArtist+" data-trackDuration="+_this.trackDuration+"><div class='bubble-container'><div class='bubble-artist'>"+_this.trackArtist+"</div><div class='bubble-title'>"+_this.trackTitle+"</div><div class='bubble-vote'>1</div><div class='bubble-vote-action'><em></em><em></em></div></div></div>");
+    TweenMax.to($(".bubble"),0.5,{
+      scale:1,
+      ease:Quad.EaseIn
+    });
+  });
+};
