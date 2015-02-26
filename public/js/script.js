@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost');
+var socket = io.connect('https://cloudrdo.herokuapp.com/');
 var client_id = "45543d60298a07d51ca66c31835dfa26",
     api = "http://api.soundcloud.com";
 
