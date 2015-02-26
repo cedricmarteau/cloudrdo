@@ -8,17 +8,24 @@ SC.initialize({
   client_id: client_id
 });
 
-SC.stream("/tracks/293", function(sound){
-  currentSound = sound;
+SC.get(api+"/tracks/293", function(track){
+  currentSound = {
+    track : track,
+    title : track.title,
+    url : "/tracks/293"
+  };
+  SC.stream(currentSound.url, function(sound){
+    currentSound.sound = sound;
+  });
 });
 
 $("#play").on("click",function(){
   if ($("#player").is(".playing")){
     $("#player").removeClass('playing');
-    currentSound.pause();
+    currentSound.sound.pause();
   }else{
     $("#player").addClass('playing');
-    currentSound.play();
+    currentSound.sound.play();
   }
 
 });
