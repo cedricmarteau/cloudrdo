@@ -49,16 +49,17 @@ function addPiste(){
     .done(function(data) {
       console.log("success",data);
       $.each(data,function(){
-        $("#search-result").append("<li><span class='result-artist'>"+this.user.username+"</span><span class='result-title'>"+this.title+"</span><div class='add_track' data-trackID="+this.id+" data-trackTitle="+this.title+" data-trackArtist="+this.user.username+" data-trackDuration="+this.duration+"><em></em><em></em></div></li>");
+        $("#search-result").append("<li><span class='result-artist'>"+this.user.username+"</span><span class='result-title'>"+this.title+"</span><div class='add_track' data-trackid="+this.id+" data-tracktitle="+this.title+" data-trackartist="+this.user.username+" data-trackduration="+this.duration+"><em></em><em></em></div></li>");
       });
       $(".add_track").on("click",function(){
         var trackClicked = {
-          trackID : $(this).data("trackID"),
-          trackArtist : $(this).data("trackArtist"),
-          trackTitle : $(this).data("trackTitle"),
-          trackDuration : $(this).data("trackDuration")
+          trackID : $(this).data("trackid"),
+          trackArtist : $(this).data("trackartist"),
+          trackTitle : $(this).data("tracktitle"),
+          trackDuration : $(this).data("trackduration")
         };
         addTrackYo(trackClicked)
+        addBubble(trackClicked);
         console.log(trackClicked);
       });
     })
@@ -69,7 +70,9 @@ function addPiste(){
 };
 
 function addBubble(track){
-
+  var _this = track;
+  $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.trackTitle+" data-trackArtist="+_this.trackArtist+" data-trackDuration="+_this.trackDuration+"><div class='bubble-artist'>"+_this.trackArtist+"</div><div class='bubble-title'>"+_this.trackTitle+"</div><div class='bubble-vote'>1</div></div>");
+  $("#overlay").hide();
 }
 
 function handler(){
