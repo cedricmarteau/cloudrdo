@@ -3,6 +3,7 @@ var client_id = "45543d60298a07d51ca66c31835dfa26",
     api = "https://api.soundcloud.com";
 
 var currentSound = null;
+var alreadyVoted = [];
 
 init();
 addPiste();
@@ -84,6 +85,7 @@ function addBubble(track){
     scale:1,
     ease:Quad.EaseIn
   });
+  alreadyVoted.push(_this.trackID);
   $("#overlay").fadeOut();
   returnFalseBubble();
   clickBubble();
@@ -94,16 +96,22 @@ function addBubble(track){
 function clickBubble(){
   $(".bubble-vote-action").off().on("click",function(e){
     var $container = $(this).parent().parent();
-    var countVote = $container.find(".bubble-vote").html();
-    countVote++;
-    $container.find(".bubble-vote").html(countVote);
-    var trackUpdated = {
-      trackID : $container.data("trackid"),
-      trackArtist : $container.data("trackartist"),
-      trackTitle : $container.data("tracktitle"),
-      trackDuration : $container.data("trackduration")
-    };
-    voteTrackYo(trackUpdated);
+    var test = $.inArray($container.data("trackid"),alreadyVoted);
+    if (test == -1){
+      alreadyVoted.push($container.data("trackid"));
+      var countVote = $container.find(".bubble-vote").html();
+      countVote++;
+      $container.find(".bubble-vote").html(countVote);
+      var trackUpdated = {
+        trackID : $container.data("trackid"),
+        trackArtist : $container.data("trackartist"),
+        trackTitle : $container.data("tracktitle"),
+        trackDuration : $container.data("trackduration")
+      };
+      voteTrackYo(trackUpdated);
+    }else{
+      console.log("déjà voté")
+    }
   });
 }
 
