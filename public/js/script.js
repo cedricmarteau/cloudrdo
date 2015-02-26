@@ -46,7 +46,7 @@ function addPiste(){
   });
   $("#overlay-submit").on("click",function(){
     $.ajax({
-      url: 'http://api.soundcloud.com/tracks.json?client_id='+client_id+'&q='+$("#overlay-input").val()+'&limit=20'
+      url: 'https://api.soundcloud.com/tracks.json?client_id='+client_id+'&q='+$("#overlay-input").val()+'&limit=20'
     })
     .done(function(data) {
       console.log("success",data);
