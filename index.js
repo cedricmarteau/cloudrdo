@@ -26,20 +26,24 @@ io.sockets.on('connection', function(socket){
 });
 
 io.sockets.on('addTrack', function(data){
-  tracks.push([data[0], 1, data[1]]);
-  io.sockets.emit("updateTracks", tracks);
+  tracks.push([data.trackID, 1, data.trackDuration]);
+  io.sockets.emit("updateAdd", data.trackID);
   if (currentTrack === null) //C'est la première chanson ajoutée
   {
-    currentTrack = data[0];
-    setTimeout(chooseNewTrack() , data[1]);
+    currentTrack = data.trackID;
+    setTimeout(chooseNewTrack() , data.trackDuration);
   }
 });
 
 io.sockets.on('vote', function(id){
+  var tmp;
   for (var i = 0; i < tracks.length; i++)
     if (tracks[i][0] == id)
+    {
       tracks[i][1] = tracks[i][1] + 1;
-    io.sockets.emit("updateTracks", tracks);
+      tmp = {id: id, vote: tracks[i][1]};
+    }
+    io.sockets.emit("updateTracks", tmp);
 });
 
 server.listen(port, function(){
