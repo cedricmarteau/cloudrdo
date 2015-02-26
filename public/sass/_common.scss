@@ -113,6 +113,23 @@ footer{
 	z-index:100;
 	box-shadow: 0px -1px 4px 0px rgba(0,0,0,0.12), 0px -1px 4px 0px rgba(0,0,0,0.24);
 	#player{
+		width: 500px;
+		height:40px;
+		position:absolute;
+		top:50%;
+		left:50%;
+		@include transform(translateX(-50%) translateY(-50%));
+		#player-info{
+			width:calc(100% - 40px);
+			height: 100%;
+			position:absolute;
+			top:0px;
+			right:0px;
+			#player-track{
+				padding:0 20px;
+				box-sizing:border-box;
+			}
+		}
 		&.playing{
 			#play{
 				background: url(../img/pause.svg) no-repeat center center;
@@ -122,10 +139,6 @@ footer{
 		#play{
 			width:40px;
 			height:40px;
-			position:absolute;
-			top:50%;
-			left:50%;
-			@include transform(translateX(-50%) translateY(-50%));
 			background: url(../img/play.svg) no-repeat center center;
 			background-size: contain;
 		}

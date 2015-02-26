@@ -8,12 +8,16 @@ SC.initialize({
   client_id: client_id
 });
 
-SC.get(api+"/tracks/293", function(track){
+SC.get(api+"/tracks/175762713", function(track){
   currentSound = {
     track : track,
     title : track.title,
-    url : "/tracks/293"
+    artist : track.user.username,
+    url : "/tracks/175762713"
   };
+  console.log(currentSound)
+  $("#player-title").html(currentSound.title);
+  $("#player-artist").html(currentSound.artist);
   SC.stream(api+currentSound.url, function(sound){
     currentSound.sound = sound;
     handler();
