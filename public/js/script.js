@@ -14,18 +14,20 @@ SC.get(api+"/tracks/293", function(track){
     title : track.title,
     url : "/tracks/293"
   };
-  SC.stream(currentSound.url, function(sound){
+  SC.stream(api+currentSound.url, function(sound){
     currentSound.sound = sound;
+    handler();
   });
 });
 
-$("#play").on("click",function(){
-  if ($("#player").is(".playing")){
-    $("#player").removeClass('playing');
-    currentSound.sound.pause();
-  }else{
-    $("#player").addClass('playing');
-    currentSound.sound.play();
-  }
-
-});
+function handler(){
+  $("#play").on("click",function(){
+    if ($("#player").is(".playing")){
+      $("#player").removeClass('playing');
+      currentSound.sound.pause();
+    }else{
+      $("#player").addClass('playing');
+      currentSound.sound.play();
+    }
+  });
+}
