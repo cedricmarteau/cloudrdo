@@ -1,0 +1,48 @@
+body{
+	-webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    *:focus {
+	    outline: 0;
+	}
+	font-family: Helvetica,Arial;
+}
+
+#abcdr-ui{
+	ul{
+		width:(60 * 26)+px;
+		height:40px;
+		position:relative;
+		margin:60px auto;
+		padding: 20px 0 15px;
+		opacity: 0;
+		@include transition(opacity 0.3s ease,null);
+		&.display{
+			opacity: 1;
+		}
+		&:hover{
+			cursor:pointer;
+		}
+		li{
+			width:60px;
+			float:left;
+			font-size: 40px;
+			font-weight: bold;
+			text-align: center;
+			text-transform: uppercase;
+			@include transform(translate3d(0,0,0) scale(3));
+		}
+	}
+}
+
+#pointer{
+	width:40px;
+	height:40px;
+	border-radius: 50%;
+	background-color: rgba(0,0,0,0.2);
+	position:absolute;
+	top:0;
+	left:0;
+	margin-left: -20px;
+	margin-top: -20px;
+	@include transform(translate3d(0,0,0));
+}

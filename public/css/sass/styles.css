@@ -1,0 +1,125 @@
+/**
+ * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+ * http://cssreset.com
+ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+@-webkit-keyframes playLoader {
+  from {
+    background-position: 50% 0px; }
+  to {
+    background-position: 0px -4092px; } }
+@-moz-keyframes playLoader {
+  from {
+    background-position: 50% 0px; }
+  to {
+    background-position: 0px -4092px; } }
+@-ms-keyframes playLoader {
+  from {
+    background-position: 50% 0px; }
+  to {
+    background-position: 0px -4092px; } }
+@-o-keyframes playLoader {
+  from {
+    background-position: 50% 0px; }
+  to {
+    background-position: 0px -4092px; } }
+@keyframes playLoader {
+  from {
+    background-position: 50% 0px; }
+  to {
+    background-position: 0px -4092px; } }
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: Helvetica,Arial; }
+  body *:focus {
+    outline: 0; }
+
+#abcdr-ui ul {
+  width: 1560px;
+  height: 40px;
+  position: relative;
+  margin: 60px auto;
+  padding: 20px 0 15px;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s ease;
+  -moz-transition: opacity 0.3s ease;
+  -ms-transition: opacity 0.3s ease;
+  -o-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease; }
+  #abcdr-ui ul.display {
+    opacity: 1; }
+  #abcdr-ui ul:hover {
+    cursor: pointer; }
+  #abcdr-ui ul li {
+    width: 60px;
+    float: left;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    -webkit-transform: translate3d(0, 0, 0) scale(3);
+    -moz-transform: translate3d(0, 0, 0) scale(3);
+    -ms-transform: translate3d(0, 0, 0) scale(3);
+    -o-transform: translate3d(0, 0, 0) scale(3);
+    transform: translate3d(0, 0, 0) scale(3); }
+
+#pointer {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: -20px;
+  margin-top: -20px;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0); }
+
+/*# sourceMappingURL=styles.css.map */

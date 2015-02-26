@@ -1,0 +1,99 @@
+@mixin transition($transition-property,$transition-property2) {
+    -webkit-transition: $transition-property,$transition-property2;
+    -moz-transition: $transition-property,$transition-property2;
+    -ms-transition: $transition-property,$transition-property2;
+    -o-transition: $transition-property,$transition-property2;
+    transition: $transition-property,$transition-property2;
+}
+@mixin transitionTransform($transition-property,$transition-property2){
+    -webkit-transition: -webkit-transform $transition-property,$transition-property2;
+    -moz-transition: -moz-transform $transition-property,$transition-property2;
+    -ms-transition: -ms-transform $transition-property,$transition-property2;
+    -o-transition: -o-transform $transition-property,$transition-property2;
+    transition: transform $transition-property,$transition-property2;
+}
+@mixin transition-delay($duration){
+    -webkit-transition-delay: $duration;
+    -moz-transition-delay: $duration;
+    -ms-transition-delay: $duration;
+    -o-transition-delay: $duration;
+    transition-delay: $duration;
+}
+@mixin transform($transform-property) {
+    -webkit-transform: $transform-property;
+    -moz-transform: $transform-property;
+    -ms-transform: $transform-property;
+    -o-transform: $transform-property;
+    transform: $transform-property;
+}
+@mixin transformNotFF($transform-property) {
+    -webkit-transform: $transform-property;
+    -ms-transform: $transform-property;
+    -o-transform: $transform-property;
+}
+@mixin transform-style($transform-style-value) {
+    -webkit-transform-style: $transform-style-value;
+    -moz-transform-style: $transform-style-value;
+    -ms-transform-style: $transform-style-value;
+    -o-transform-style: $transform-style-value;
+    transform-style: $transform-style-value;
+}
+@mixin transform-origin($transform-origin-value) {
+    -webkit-transform-origin: $transform-origin-value;
+    -moz-transform-origin: $transform-origin-value;
+    -ms-transform-origin: $transform-origin-value;
+    -o-transform-origin: $transform-origin-value;
+    transform-origin: $transform-origin-value;
+}
+@mixin animation($animation-property) {
+    -webkit-animation: $animation-property;
+    -moz-animation: $animation-property;
+    -ms-animation: $animation-property;
+    -o-animation: $animation-property;
+    animation: $animation-property;
+}
+@mixin animation-delay($duration){
+    -webkit-animation-delay: $duration;
+    -moz-animation-delay: $duration;
+    -ms-animation-delay: $duration;
+    -o-animation-delay: $duration;
+    animation-delay: $duration;
+}
+@mixin perspective($perspective-value:none) {
+    -webkit-perspective: $perspective-value;
+    -moz-perspective: $perspective-value;
+    -ms-perspective: $perspective-value;
+    -o-perspective: $perspective-value;
+    perspective: $perspective-value;
+}
+@mixin backface-visibility($backface-visibility-value) {
+    -webkit-backface-visibility: $backface-visibility-value;
+    -moz-backface-visibility: $backface-visibility-value;
+    -ms-backface-visibility: $backface-visibility-value;
+    -o-backface-visibility: $backface-visibility-value;
+    backface-visibility: $backface-visibility-value;
+}
+@-webkit-keyframes playLoader {
+   from { background-position: 50% 0px; }
+     to { background-position: 0px -4092px; }
+}
+
+@-moz-keyframes playLoader {
+   from { background-position: 50% 0px; }
+     to { background-position: 0px -4092px; }
+}
+
+@-ms-keyframes playLoader {
+   from { background-position: 50% 0px; }
+     to { background-position: 0px -4092px; }
+}
+
+@-o-keyframes playLoader {
+   from { background-position: 50% 0px; }
+     to { background-position: 0px -4092px; }
+}
+
+@keyframes playLoader {
+   from { background-position: 50% 0px; }
+     to { background-position: 0px -4092px; }
+}
