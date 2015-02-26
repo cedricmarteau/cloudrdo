@@ -1,6 +1,6 @@
 var socket = io.connect('https://cloudrdo.herokuapp.com/');
 var client_id = "45543d60298a07d51ca66c31835dfa26",
-    api = "//api.soundcloud.com";
+    api = "https://api.soundcloud.com";
 
 var currentSound = null;
 
