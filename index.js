@@ -49,14 +49,17 @@ function chooseNewTrack()
 {
   var max = 0;
   var id = 0;
+  var time = 0;
   for (var i = 0; i < tracks.length; i++)
   {
     if (tracks[i][1] > max)
     {
       max = tracks[i][1];
       id = tracks[i][0];
+      time = tracks[i][2];
     }
   }
   currentTrack = id;
   io.sockets.emit("updateCurrent", currentTrack);
+  setTimeout(chooseNewTrack(), time);
 }
