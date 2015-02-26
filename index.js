@@ -7,8 +7,8 @@ var io = require('socket.io').listen(server);
 
 //Array of music ids and votes and duration
 var tracks = [];
-var currentTrack; //ID
-// var currentTrack = 175762713;
+// var currentTrack; //ID
+var currentTrack = 175762713;
 
 app.use(express.bodyParser());
 
@@ -22,11 +22,12 @@ app.get(/^(.+)$/, function(req, res) {
 
 io.sockets.on('connection', function(socket){
   console.log('a user connected');
+  socket.emit("listTrack", tracks);
   socket.emit("currentTrack", currentTrack);
 });
 
 io.sockets.on('addTrack', function(data){
-  tracks.push([data.trackID, 1, data.trackDuration]);
+  tracks.push({trackID: data.trackID, trackVotes: 1, trackDuration: data.trackDuration});
   io.sockets.emit("updateAdd", data.trackID);
   if (currentTrack === null) //C'est la première chanson ajoutée
   {
@@ -38,10 +39,10 @@ io.sockets.on('addTrack', function(data){
 io.sockets.on('vote', function(id){
   var tmp;
   for (var i = 0; i < tracks.length; i++)
-    if (tracks[i][0] == id)
+    if (tracks[i].trackID == id)
     {
-      tracks[i][1] = tracks[i][1] + 1;
-      tmp = {id: id, vote: tracks[i][1]};
+      tracks[i].trackVotes = tracks[i].trackVotes + 1;
+      tmp = {id: id, vote: tracks[i].trackVotes};
     }
     io.sockets.emit("updateTracks", tmp);
 });
@@ -55,16 +56,19 @@ function chooseNewTrack()
   var max = 0;
   var id = 0;
   var time = 0;
+  var iTmp = 0;
   for (var i = 0; i < tracks.length; i++)
   {
-    if (tracks[i][1] > max)
+    if (tracks[i].trackVotes > max)
     {
-      max = tracks[i][1];
-      id = tracks[i][0];
-      time = tracks[i][2];
+      max = tracks[i].trackVotes;
+      id = tracks[i].trackID;
+      time = tracks[i].trackDuration;
+      iTmp = i;
     }
   }
   currentTrack = id;
+  tracks.splice(iTmp, 1);
   io.sockets.emit("updateCurrent", currentTrack);
   setTimeout(chooseNewTrack(), time);
 }
