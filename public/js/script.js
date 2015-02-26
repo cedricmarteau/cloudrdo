@@ -95,7 +95,8 @@ function clickBubble(){
   $(".bubble-vote-action").off().on("click",function(e){
     var $container = $(this).parent().parent();
     var countVote = $container.find(".bubble-vote").html();
-    $container.find(".bubble-vote").html(countVote++);
+    countVote++;
+    $container.find(".bubble-vote").html(countVote);
     var trackUpdated = {
       trackID : $container.data("trackid"),
       trackArtist : $container.data("trackartist"),
