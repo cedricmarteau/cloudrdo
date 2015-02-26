@@ -4,6 +4,7 @@ var client_id = "45543d60298a07d51ca66c31835dfa26",
 
 var currentSound = null;
 
+init();
 addPiste();
 listener();
 
@@ -13,6 +14,7 @@ SC.initialize({
 
 function init(){
   socket.on("currentTrack",function(trackFromNode){
+    console.log(trackFromNode)
     SC.get(api+"/tracks/"+trackFromNode, function(track){
       currentSound = {
         track : track,
