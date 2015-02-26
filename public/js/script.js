@@ -11,28 +11,28 @@ SC.initialize({
   client_id: client_id
 });
 
-SC.get(api+"/tracks/175762713", function(track){
-  currentSound = {
-    track : track,
-    trackID : track.id,
-    title : track.title,
-    artist : track.user.username,
-    duration : track.duration,
-    url : "/tracks/175762713"
-  };
-  console.log(currentSound)
-  $("#player-title").html(currentSound.title);
-  $("#player-artist").html(currentSound.artist);
-  SC.stream(api+currentSound.url, function(sound){
-    currentSound.sound = sound;
-    handler();
+function init(){
+  socket.on("currentTrack",function(trackFromNode){
+    SC.get(api+"/tracks/"+trackFromNode, function(track){
+      currentSound = {
+        track : track,
+        trackID : track.id,
+        title : track.title,
+        artist : track.user.username,
+        duration : track.duration,
+        url : "/tracks/"+trackFromNode
+      };
+      $("#player-title").html(currentSound.title);
+      $("#player-artist").html(currentSound.artist);
+      SC.stream(api+currentSound.url, function(sound){
+        currentSound.sound = sound;
+        handler();
+      });
+    });
   });
-});
+};
 
 function addPiste(){
-  $(".bubble").on("click",function(e){
-    e.stopPropagation();
-  });
   $("#main").on("click",function(){
     $("#overlay").show();
   });
@@ -69,10 +69,19 @@ function addPiste(){
   });
 };
 
+function returnFalseBubble(){
+  $(".bubble").on("click",function(e){
+    e.stopPropagation();
+  });
+}
+
 function addBubble(track){
   var _this = track;
-  $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.trackTitle+" data-trackArtist="+_this.trackArtist+" data-trackDuration="+_this.trackDuration+"><div class='bubble-artist'>"+_this.trackArtist+"</div><div class='bubble-title'>"+_this.trackTitle+"</div><div class='bubble-vote'>1</div></div>");
+  $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.trackTitle+" data-trackArtist="+_this.trackArtist+" data-trackDuration="+_this.trackDuration+"><div class='bubble-container'><div class='bubble-artist'>"+_this.trackArtist+"</div><div class='bubble-title'>"+_this.trackTitle+"</div><div class='bubble-vote'>1</div></div></div>");
   $("#overlay").hide();
+  returnFalseBubble();
+  $("#search-result").html("");
+  $("#overlay-input").val("");
 }
 
 function handler(){

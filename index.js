@@ -7,7 +7,8 @@ var io = require('socket.io').listen(server);
 
 //Array of music ids and votes and duration
 var tracks = [];
-var currentTrack; //ID
+// var currentTrack; //ID
+var currentTrack = 175762713;
 
 app.use(express.bodyParser());
 
