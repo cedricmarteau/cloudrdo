@@ -38,7 +38,7 @@ io.sockets.on('vote', function(id){
   for (var i = 0; i < tracks.length; i++)
     if (tracks[i][0] == id)
       tracks[i][1] = tracks[i][1] + 1;
-  io.sockets.emit("updateTracks", tracks);
+    io.sockets.emit("updateTracks", tracks);
 });
 
 server.listen(port, function(){
