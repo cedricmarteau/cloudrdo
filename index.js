@@ -37,16 +37,17 @@ io.sockets.on('connection', function(socket){
     }
   });
 
-  socket.on('vote', function(id){
-    console.log("vote")
+  socket.on('vote', function(sound){
+    console.log("vote",tracks,sound)
     var tmp;
-    for (var i = 0; i < tracks.length; i++)
-      if (tracks[i].trackID == id)
-      {
+    for (var i = 0; i < tracks.length; i++){
+      if (tracks[i].trackID == sound.trackID){
         tracks[i].trackVotes = tracks[i].trackVotes + 1;
-        tmp = {id: id, vote: tracks[i].trackVotes};
+        tmp = {id: sound.trackID, trackVotes: tracks[i].trackVotes};
+        console.log("tmp",tmp)
+        io.sockets.emit("updateTracks", tmp);
       }
-      io.sockets.emit("updateTracks", tmp);
+    }
   });
 });
 

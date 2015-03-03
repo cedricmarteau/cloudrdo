@@ -1,5 +1,5 @@
-var socket = io.connect('https://cloudrdo.herokuapp.com/');
-// var socket = io.connect('http://localhost');
+// var socket = io.connect('https://cloudrdo.herokuapp.com/');
+var socket = io.connect('http://localhost');
 var client_id = "45543d60298a07d51ca66c31835dfa26",
     api = "https://api.soundcloud.com";
 
@@ -127,9 +127,9 @@ function clickBubble(){
     var test = $.inArray($container.data("trackid"),alreadyVoted);
     if (test == -1){
       alreadyVoted.push($container.data("trackid"));
-      var countVote = $container.find(".bubble-vote").html();
-      countVote++;
-      $container.find(".bubble-vote").html(countVote);
+      // var countVote = $container.find(".bubble-vote").html();
+      // countVote++;
+      // $container.find(".bubble-vote").html(countVote);
       var trackUpdated = {
         trackID : $container.data("trackid"),
         trackArtist : $container.data("trackartist"),
@@ -172,7 +172,7 @@ function listener(){
   });
   socket.on('updateTracks',function(soundData){
     console.log("updateTracks_FROM_SERVER",soundData)
-    $("li[data-trackid="+soundData.id+"]").find(".bubble-vote").html(soundData.vote);
+    $("div[data-trackid="+soundData.id+"]").find(".bubble-vote").html(soundData.trackVotes);
   });
 };
 
