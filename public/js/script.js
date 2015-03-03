@@ -1,9 +1,9 @@
-var socket = io.connect('https://cloudrdo.herokuapp.com/');
-// var socket = io.connect('http://localhost');
+// var socket = io.connect('https://cloudrdo.herokuapp.com/');
+var socket = io.connect('http://localhost');
 var client_id = "45543d60298a07d51ca66c31835dfa26",
     api = "https://api.soundcloud.com";
 
-var currentSound = null;
+var currentSound = {};
 var alreadyVoted = [];
 var noCurrentSound = false;
 
@@ -20,22 +20,7 @@ function init(){
     console.log("currentTrack",trackFromNode)
     if (trackFromNode != null){
       noCurrentSound = false;
-      SC.get(api+"/tracks/"+trackFromNode, function(track){
-        currentSound = {
-          track : track,
-          trackID : track.id,
-          title : track.title,
-          artist : track.user.username,
-          duration : track.duration,
-          url : "/tracks/"+trackFromNode
-        };
-        $("#player-title").html(currentSound.title);
-        $("#player-artist").html(currentSound.artist);
-        SC.stream(api+currentSound.url, function(sound){
-          currentSound.sound = sound;
-          handler();
-        });
-      });
+      streamFromSoundCloud(trackFromNode);
     }else{
       noCurrentSound = true;
       $("#clickToAdd").fadeIn();
@@ -91,6 +76,9 @@ function addPiste(){
         addTrackYo(trackClicked);
         $("#clickToAdd").fadeOut();
         alreadyVoted.push(trackClicked.trackID);
+        if ($(".bubble").length < 2){
+          streamFromSoundCloud(trackClicked.trackID);
+        }
       });
     })
     .fail(function() {
@@ -177,11 +165,21 @@ function listener(){
 };
 
 function streamFromSoundCloud(soundID){
-  SC.stream(api+"/tracks/"+soundID, function(sound){
-    currentSound.sound = sound;
-    $("#player-title").html(currentSound.sound.title);
-    $("#player-artist").html(currentSound.sound.artist);
-    handler();
+  SC.get(api+"/tracks/"+soundID, function(track){
+    currentSound = {
+      track : track,
+      trackID : track.id,
+      title : track.title,
+      artist : track.user.username,
+      duration : track.duration,
+      url : "/tracks/"+soundID
+    };
+    $("#player-title").html(currentSound.title);
+    $("#player-artist").html(currentSound.artist);
+    SC.stream(api+currentSound.url, function(sound){
+      currentSound.sound = sound;
+      handler();
+    });
   });
 };
 

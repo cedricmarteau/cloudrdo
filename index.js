@@ -33,7 +33,6 @@ io.sockets.on('connection', function(socket){
       console.log("currentTrack",data.trackID)
       console.log(data.trackDuration);
       currentTrack = data.trackID;
-      // setTimeout(chooseNewTrack() , data.trackDuration);
     }
   });
 
