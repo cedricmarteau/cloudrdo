@@ -1,5 +1,5 @@
-// var socket = io.connect('https://cloudrdo.herokuapp.com/');
-var socket = io.connect('http://localhost');
+var socket = io.connect('https://cloudrdo.herokuapp.com/');
+// var socket = io.connect('http://localhost');
 var client_id = "45543d60298a07d51ca66c31835dfa26",
     api = "https://api.soundcloud.com";
 
@@ -90,7 +90,7 @@ function addPiste(){
         $("#overlay").fadeOut();
         addTrackYo(trackClicked);
         $("#clickToAdd").fadeOut();
-        // console.log(trackClicked);
+        alreadyVoted.push(trackClicked.trackID);
       });
     })
     .fail(function() {
@@ -112,7 +112,6 @@ function addBubble(track){
     scale:1,
     ease:Quad.EaseIn
   });
-  alreadyVoted.push(_this.trackID);
   returnFalseBubble();
   clickBubble();
   $("#search-result").html("");
