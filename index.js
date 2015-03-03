@@ -31,6 +31,7 @@ io.sockets.on('connection', function(socket){
     io.sockets.emit("updateAdd", data.trackID);
     if (currentTrack == null){ //C'est la première chanson ajoutée
       console.log("currentTrack",data.trackID)
+      console.log(data.trackDuration);
       currentTrack = data.trackID;
       // setTimeout(chooseNewTrack() , data.trackDuration);
     }
