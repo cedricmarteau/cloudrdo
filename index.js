@@ -28,12 +28,11 @@ io.sockets.on('connection', function(socket){
   socket.on('addTrack', function(data){
     console.log("addTrack")
     tracks.push({trackID: data.trackID, trackVotes: 1, trackDuration: data.trackDuration});
-    console.log(tracks)
     io.sockets.emit("updateAdd", data.trackID);
-    if (currentTrack === null) //C'est la première chanson ajoutée
-    {
+    if (currentTrack == null){ //C'est la première chanson ajoutée
+      console.log("currentTrack",data.trackID)
       currentTrack = data.trackID;
-      setTimeout(chooseNewTrack() , data.trackDuration);
+      // setTimeout(chooseNewTrack() , data.trackDuration);
     }
   });
 

@@ -89,7 +89,6 @@ function addPiste(){
         };
         $("#overlay").fadeOut();
         addTrackYo(trackClicked);
-        // addBubble(trackClicked);
         $("#clickToAdd").fadeOut();
         // console.log(trackClicked);
       });
