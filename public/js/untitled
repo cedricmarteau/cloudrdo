@@ -1,5 +1,5 @@
-var socket = io.connect('https://cloudrdo.herokuapp.com/');
-// var socket = io.connect('http://localhost');
+// var socket = io.connect('https://cloudrdo.herokuapp.com/');
+var socket = io.connect('http://localhost');
 var client_id = "45543d60298a07d51ca66c31835dfa26",
     api = "https://api.soundcloud.com";
 
@@ -172,15 +172,15 @@ function listener(){
 
 function streamFromSoundCloud(soundID){
   SC.get(api+"/tracks/"+soundID, function(_track){
-    console.log(_track)
+    // console.log(track)
     currentSound = {
       track : _track,
       trackID : _track.id,
       title : _track.title,
       artist : _track.user.username,
       duration : _track.duration,
-      url : "/tracks/"+soundID
-      // waveImg : _track.waveform_url
+      url : "/tracks/"+soundID,
+      waveImg : _track.waveform_url
     };
     $("#player-title").html(currentSound.title);
     $("#player-artist").html(currentSound.artist);
@@ -191,7 +191,7 @@ function streamFromSoundCloud(soundID){
         container: document.getElementById("waveform"),
         innerColor: "#333"
       });
-      currentSound.waveform.dataFromSoundCloudTrack(currentSound.track);
+      currentSound.waveform.dataFromSoundCloudTrack(currentSound.waveImg);
     });
   });
 };

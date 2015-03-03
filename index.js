@@ -8,7 +8,6 @@ var io = require('socket.io').listen(server, { log: false });
 //Array of music ids and votes and duration
 var tracks = [];
 var currentTrack; //ID
-// var currentTrack = 175762713;
 
 app.use(express.bodyParser());
 
@@ -32,6 +31,7 @@ io.sockets.on('connection', function(socket){
     if (currentTrack == null){ //C'est la première chanson ajoutée
       console.log("currentTrack",data.trackID)
       console.log(data.trackDuration);
+      playingTimer(data.trackDuration)
       currentTrack = data.trackID;
     }
   });
@@ -50,28 +50,27 @@ io.sockets.on('connection', function(socket){
   });
 });
 
+var timerInterval;
+var currentTiming = 0;
+
+function playingTimer(timing){
+  var tempDuration = 0;
+  timerInterval = setInterval(function(){
+    tempDuration+=1000;
+    if (currentTiming >= 0){
+      currentTiming = timing - tempDuration;
+      console.log("currentTiming",currentTiming)
+      io.sockets.emit("currentTiming", currentTiming);
+    }else{
+      clearInterval(timerInterval);
+    }
+  },1000);
+};
+
+function nextSound(){
+  io.sockets.emit("nextSound");
+};
+
 server.listen(port, function(){
   console.log('listening on *:'+port);
 });
-
-function chooseNewTrack()
-{
-  var max = 0;
-  var id = 0;
-  var time = 0;
-  var iTmp = 0;
-  for (var i = 0; i < tracks.length; i++)
-  {
-    if (tracks[i].trackVotes > max)
-    {
-      max = tracks[i].trackVotes;
-      id = tracks[i].trackID;
-      time = tracks[i].trackDuration;
-      iTmp = i;
-    }
-  }
-  currentTrack = id;
-  tracks.splice(iTmp, 1);
-  io.sockets.emit("updateCurrent", currentTrack);
-  setTimeout(chooseNewTrack(), time);
-}
