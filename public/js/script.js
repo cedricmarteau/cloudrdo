@@ -1,5 +1,5 @@
-var socket = io.connect('https://cloudrdo.herokuapp.com/');
-// var socket = io.connect('http://localhost');
+// var socket = io.connect('https://cloudrdo.herokuapp.com/');
+var socket = io.connect('http://localhost');
 var client_id = "45543d60298a07d51ca66c31835dfa26",
     api = "https://api.soundcloud.com";
 
@@ -45,7 +45,8 @@ function init(){
     console.log("listTrack",array)
     $.each(array,function(){
       var self = this;
-      SC.get(api+"/tracks/"+self.id, function(track){
+      console.log(self)
+      SC.get(api+"/tracks/"+self.trackID, function(track){
         var sound = {
           trackID : track.id,
           trackArtist : track.user.username,
@@ -86,10 +87,11 @@ function addPiste(){
           trackDuration : $(this).data("trackduration"),
           trackVotes : 1
         };
-        addTrackYo(trackClicked)
-        addBubble(trackClicked);
+        $("#overlay").fadeOut();
+        addTrackYo(trackClicked);
+        // addBubble(trackClicked);
         $("#clickToAdd").fadeOut();
-        console.log(trackClicked);
+        // console.log(trackClicked);
       });
     })
     .fail(function() {
@@ -112,7 +114,6 @@ function addBubble(track){
     ease:Quad.EaseIn
   });
   alreadyVoted.push(_this.trackID);
-  $("#overlay").fadeOut();
   returnFalseBubble();
   clickBubble();
   $("#search-result").html("");
@@ -139,7 +140,7 @@ function clickBubble(){
       };
       voteTrackYo(trackUpdated);
     }else{
-      console.log("déjà voté")
+      alert("You've already voted!");
     }
   });
 }
@@ -187,16 +188,18 @@ function streamFromSoundCloud(soundID){
 };
 
 function getFromSoundCloud(soundID){
-  SC.get(api+"/tracks/"+soundID, function(track){
+  SC.get(api+"/tracks/"+soundID, function(sound){
+    console.log(sound)
     var _this = {
-      track : track,
-      trackID : track.id,
-      title : track.title,
-      artist : track.user.username,
-      duration : track.duration,
+      track : sound,
+      trackID : sound.id,
+      title : sound.title,
+      artist : sound.user.username,
+      duration : sound.duration,
       url : "/tracks/"+soundID
     };
-    $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.trackTitle+" data-trackArtist="+_this.trackArtist+" data-trackDuration="+_this.trackDuration+"><div class='bubble-container'><div class='bubble-artist'>"+_this.trackArtist+"</div><div class='bubble-title'>"+_this.trackTitle+"</div><div class='bubble-vote'>1</div><div class='bubble-vote-action'><em></em><em></em></div></div></div>");
+    console.log("sound",_this,_this.trackID)
+    $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.title+" data-trackArtist="+_this.artist+" data-trackDuration="+_this.duration+"><div class='bubble-container'><div class='bubble-artist'>"+_this.artist+"</div><div class='bubble-title'>"+_this.title+"</div><div class='bubble-vote'>1</div><div class='bubble-vote-action'><em></em><em></em></div></div></div>");
     TweenMax.to($(".bubble"),0.5,{
       scale:1,
       ease:Quad.EaseIn

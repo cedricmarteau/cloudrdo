@@ -3,7 +3,7 @@ var http = require('http');
 var app = express();
 var server = require('http').createServer(app);
 var port = process.env.PORT || 5000;
-var io = require('socket.io').listen(server);
+var io = require('socket.io').listen(server, { log: false });
 
 //Array of music ids and votes and duration
 var tracks = [];
@@ -28,6 +28,7 @@ io.sockets.on('connection', function(socket){
   socket.on('addTrack', function(data){
     console.log("addTrack")
     tracks.push({trackID: data.trackID, trackVotes: 1, trackDuration: data.trackDuration});
+    console.log(tracks)
     io.sockets.emit("updateAdd", data.trackID);
     if (currentTrack === null) //C'est la première chanson ajoutée
     {
