@@ -162,8 +162,10 @@ function listener(){
     console.log("updateTracks_FROM_SERVER",soundData)
     $("div[data-trackid="+soundData.id+"]").find(".bubble-vote").html(soundData.trackVotes);
   });
-  socket.on('currentTiming',function(currentTiming){
-
+  socket.on('currentTiming',function(percent){
+    $("#waveform_progress").css({
+      width:100-percent+"%"
+    });
   });
   socket.on('nextSound',function(nextSound){
     

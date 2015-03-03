@@ -51,16 +51,18 @@ io.sockets.on('connection', function(socket){
 });
 
 var timerInterval;
+var initialTiming;
 var currentTiming = 0;
 
 function playingTimer(timing){
   var tempDuration = 0;
+  initialTiming = timing;
   timerInterval = setInterval(function(){
     tempDuration+=1000;
     if (currentTiming >= 0){
       currentTiming = timing - tempDuration;
-      console.log("currentTiming",currentTiming)
-      io.sockets.emit("currentTiming", currentTiming);
+      console.log("currentTiming",currentTiming+" "+(currentTiming*100)/initialTiming);
+      io.sockets.emit("currentTiming", (currentTiming*100)/initialTiming);
     }else{
       clearInterval(timerInterval);
     }
