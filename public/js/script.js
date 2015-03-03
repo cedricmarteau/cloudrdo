@@ -167,8 +167,11 @@ function listener(){
       width:100-percent+"%"
     });
   });
-  socket.on('nextSound',function(nextSound){
-    
+  socket.on('nextSound',function(nextSoundID){
+    $("div[data-trackid="+nextSoundID.id+"]").remove();
+    if ($(".bubble").length == 0){
+        $("#clickToAdd").fadeIn();
+    }
   });
 };
 
