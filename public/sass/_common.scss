@@ -28,7 +28,7 @@ header{
 		display: block;
 		position:absolute;
 		top:50%;
-		left:5%;
+		left: 70px;
 		@include transform(translateY(-50%));
 		font-size: 40px;
 		font-weight:100;
