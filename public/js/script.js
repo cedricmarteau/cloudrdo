@@ -61,7 +61,6 @@ function addPiste(){
   });
   $("#overlay-submit").on("click",function(){
     $("#search-result").html("");
-    $("#overlay-input").val("");
     $.ajax({
       url: 'https://api.soundcloud.com/tracks.json?client_id='+client_id+'&q='+$("#overlay-input").val()+'&limit=20'
     })
