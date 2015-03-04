@@ -25,7 +25,7 @@ io.sockets.on('connection', function(socket){
   console.log('a user connected');
   socket.emit("listTrack", tracks);
   socket.emit("currentTrack", currentTrack);
-  
+
   socket.on('addTrack', function(data){
     console.log("addTrack")
     tracks.push({trackID: data.trackID, trackVotes: 1, trackDuration: data.trackDuration});
