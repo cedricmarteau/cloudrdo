@@ -172,11 +172,11 @@ function listener(){
   socket.on('nextSound',function(nextSoundID){
     console.log("nextSound",nextSoundID)
     streamFromSoundCloud(nextSoundID);
-    TweenMax.to($("div[data-trackid="+nextSoundID.id+"]"),0.5,{
+    TweenMax.to($("div[data-trackid="+nextSoundID+"]"),0.5,{
       scale:0,
       ease:Quad.EaseIn,
       onComplete:function(){
-        $("div[data-trackid="+nextSoundID.id+"]").remove();
+        $("div[data-trackid="+nextSoundID+"]").remove();
         if ($(".bubble").length == 0){
             $("#clickToAdd").fadeIn();
         }
@@ -233,6 +233,8 @@ function getFromSoundCloud(soundID){
         scale:1,
         ease:Quad.EaseIn
       });
+      returnFalseBubble();
+      clickBubble();
     }
   });
 };

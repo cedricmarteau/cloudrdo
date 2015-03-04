@@ -54,10 +54,11 @@ io.sockets.on('connection', function(socket){
 
 var timerInterval;
 var initialTiming;
-var currentTiming = 0;
+var currentTiming;
 
 function playingTimer(timing){
  var tempDuration = 0;
+ currentTiming = 0;
  initialTiming = timing;
  timerInterval = setInterval(function(){
    tempDuration+=1000;
