@@ -130,17 +130,25 @@ function clickBubble(){
 function handler(){
   $("#play").on("click",function(){
     if ($("#player").is(".playing")){
-      $("#player").removeClass('playing');
-      currentSound.sound.pause();
+      triggerPause();
     }else{
-      $("#player").addClass('playing');
-      currentSound.sound.setPosition(currentSoundPosition.positionMS);
-      // currentSound.sound._onload(function(){
-        console.log(currentSoundPosition.positionMS)
-        currentSound.sound.play();
-      // })
+      triggerPlay();
     }
   });
+}
+
+function triggerPlay(){
+  $("#player").addClass('playing');
+  currentSound.sound.setPosition(currentSoundPosition.positionMS);
+  // currentSound.sound._onload(function(){
+    console.log(currentSoundPosition.positionMS)
+    currentSound.sound.play();
+  // })
+}
+
+function triggerPause(){
+  $("#player").removeClass('playing');
+  currentSound.sound.pause();
 }
 
 function addTrackYo(sound){
@@ -188,6 +196,9 @@ function listener(){
 function streamFromSoundCloud(soundID){
   SC.get(api+"/tracks/"+soundID, function(_track){
     console.log(_track)
+    if (currentSound.track != null){
+      triggerPause();
+    }
     currentSound = {
       track : _track,
       trackID : _track.id,
@@ -201,6 +212,7 @@ function streamFromSoundCloud(soundID){
     noCurrentSound = false;
     SC.stream(api+currentSound.url, function(sound){
       currentSound.sound = sound;
+      triggerPlay();
       handler();
       currentSound.waveform = new Waveform({
         container: document.getElementById("waveform"),
