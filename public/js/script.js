@@ -4,6 +4,7 @@ var client_id = "45543d60298a07d51ca66c31835dfa26",
     api = "https://api.soundcloud.com";
 
 var currentSound = {};
+var currentSoundPosition = {percentPosition:0,positionMS:0};
 var alreadyVoted = [];
 var noCurrentSound = false;
 
@@ -138,6 +139,8 @@ function handler(){
       currentSound.sound.pause();
     }else{
       $("#player").addClass('playing');
+      currentSound.sound.setPosition(currentSoundPosition.positionMS);
+      console.log(currentSoundPosition.positionMS)
       currentSound.sound.play();
     }
   });
@@ -162,16 +165,24 @@ function listener(){
     console.log("updateTracks_FROM_SERVER",soundData)
     $("div[data-trackid="+soundData.id+"]").find(".bubble-vote").html(soundData.trackVotes);
   });
-  socket.on('currentTiming',function(percent){
+  socket.on('currentTiming',function(soundPos){
+    console.log(soundPos)
+    currentSoundPosition = soundPos;
     $("#waveform_progress").css({
-      width:100-percent+"%"
+      width:100-currentSoundPosition.percentPosition+"%"
     });
   });
   socket.on('nextSound',function(nextSoundID){
-    $("div[data-trackid="+nextSoundID.id+"]").remove();
-    if ($(".bubble").length == 0){
-        $("#clickToAdd").fadeIn();
-    }
+    TweenMax.to($("div[data-trackid="+nextSoundID.id+"]"),0.5,{
+      scale:0,
+      ease:Quad.EaseIn,
+      onComplete:function(){
+        $("div[data-trackid="+nextSoundID.id+"]").remove();
+        if ($(".bubble").length == 0){
+            $("#clickToAdd").fadeIn();
+        }
+      }
+    });
   });
 };
 
