@@ -91,7 +91,7 @@ header {
   top: 0px;
   left: 0px;
   border-top: 5px solid #455A64;
-  background-color: #607D8B;
+  background-color: #212121;
   box-sizing: border-box;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.12), 0px 4px 4px 0px rgba(0, 0, 0, 0.24);
   z-index: 10; }
@@ -158,9 +158,10 @@ header {
         background: none;
         outline: none;
         border: none;
-        border-bottom: 2px solid #212121;
+        border-bottom: 1px solid #455A64;
         font-size: 21px;
-        box-sizing: border-box; }
+        box-sizing: border-box;
+        color: white; }
       #overlay #overlay-main header #overlay-submit {
         width: 200px;
         height: 40px;
@@ -173,7 +174,7 @@ header {
         -ms-transform: translateY(-50%);
         -o-transform: translateY(-50%);
         transform: translateY(-50%);
-        background-color: #FFEB3B;
+        background-color: #455A64;
         border-radius: 5px; }
         #overlay #overlay-main header #overlay-submit span {
           text-transform: uppercase;
@@ -186,7 +187,7 @@ header {
           -ms-transform: translateY(-50%) translateX(-50%);
           -o-transform: translateY(-50%) translateX(-50%);
           transform: translateY(-50%) translateX(-50%);
-          color: #212121;
+          color: white;
           font-weight: 900; }
     #overlay #overlay-main section {
       width: 100%;
@@ -210,7 +211,7 @@ header {
           top: 50%;
           margin-top: -20px;
           right: 30px;
-          background-color: #FFEB3B;
+          background-color: #455A64;
           border-radius: 50%; }
           #overlay #overlay-main section li .add_track em {
             display: block;
@@ -218,20 +219,20 @@ header {
             position: relative; }
             #overlay #overlay-main section li .add_track em:first-child {
               width: 20px;
-              height: 6px;
+              height: 4px;
               position: absolute;
               top: 50%;
               left: 50%;
-              margin-top: -3px;
+              margin-top: -2px;
               margin-left: -10px; }
             #overlay #overlay-main section li .add_track em:nth-child(2) {
-              width: 6px;
+              width: 4px;
               height: 20px;
               position: absolute;
               top: 50%;
               left: 50%;
               margin-top: -10px;
-              margin-left: -3px; }
+              margin-left: -2px; }
 
 section {
   width: 100%;
@@ -273,6 +274,7 @@ section {
       border-radius: 50%;
       display: inline-block;
       background-color: #B6B6B6;
+      box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
       -webkit-transform: scale(0);
       -moz-transform: scale(0);
       -ms-transform: scale(0);
@@ -298,7 +300,7 @@ section {
           position: relative;
           margin: 10px auto 0;
           border-radius: 50%;
-          background: #FFEB3B url(../img/like.svg) no-repeat center center;
+          background: #455A64 url(../img/like.svg) no-repeat center center;
           background-size: 30px; }
 
 footer {
@@ -309,7 +311,23 @@ footer {
   bottom: 0;
   background-color: #CFD8DC;
   z-index: 100;
-  box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.12), 0px -1px 4px 0px rgba(0, 0, 0, 0.24); }
+  box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.12), 0px -1px 4px 0px rgba(0, 0, 0, 0.24);
+  -webkit-transform: translateY(100%);
+  -moz-transform: translateY(100%);
+  -ms-transform: translateY(100%);
+  -o-transform: translateY(100%);
+  transform: translateY(100%);
+  -webkit-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -ms-transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  transition: all ease 0.3s; }
+  footer.show {
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    transform: translateY(0%); }
   footer #player {
     width: 500px;
     height: 40px;
