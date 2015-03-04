@@ -1,5 +1,5 @@
-var socket = io.connect('https://cloudrdo.herokuapp.com/');
-// var socket = io.connect('http://localhost');
+// var socket = io.connect('https://cloudrdo.herokuapp.com/');
+var socket = io.connect('http://localhost');
 var client_id = "45543d60298a07d51ca66c31835dfa26",
     api = "https://api.soundcloud.com";
 
@@ -179,21 +179,34 @@ function listener(){
   });
   socket.on('nextSound',function(nextSoundID){
     console.log("nextSound",nextSoundID)
-    streamFromSoundCloud(nextSoundID);
-    TweenMax.to($("div[data-trackid="+nextSoundID+"]"),0.5,{
-      scale:0,
-      ease:Quad.EaseIn,
-      onComplete:function(){
-        $("div[data-trackid="+nextSoundID+"]").remove();
-        if ($(".bubble").length == 0){
-            $("#clickToAdd").fadeIn();
+    if (nextSoundID != "noID"){
+      streamFromSoundCloud(nextSoundID);
+      TweenMax.to($("div[data-trackid="+nextSoundID+"]"),0.5,{
+        scale:0,
+        ease:Quad.EaseIn,
+        onComplete:function(){
+          $("div[data-trackid="+nextSoundID+"]").remove();
+          if ($(".bubble").length == 0){
+              $("#clickToAdd").fadeIn();
+          }
         }
-      }
-    });
+      });
+    }else{
+      $("#waveform").find("canvas").fadeOut();
+      $("#player-title").html("");
+      $("#player-artist").html("");
+      $("#player").removeClass('playing');
+      $("#player").addClass('noSound');
+    }
   });
 };
 
 function streamFromSoundCloud(soundID){
+  var myStreamOptions = {
+    onload : function() {
+      triggerPlay();
+    }
+  };
   SC.get(api+"/tracks/"+soundID, function(_track){
     console.log(_track)
     if (currentSound.track != null){
@@ -210,9 +223,10 @@ function streamFromSoundCloud(soundID){
     $("#player-title").html(currentSound.title);
     $("#player-artist").html(currentSound.artist);
     noCurrentSound = false;
-    SC.stream(api+currentSound.url, function(sound){
+    SC.stream(api+currentSound.url,myStreamOptions, function(sound){
+      sound.load();
+      $("#player").removeClass('noSound');
       currentSound.sound = sound;
-      triggerPlay();
       handler();
       currentSound.waveform = new Waveform({
         container: document.getElementById("waveform"),

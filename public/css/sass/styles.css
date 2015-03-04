@@ -371,6 +371,8 @@ footer {
     footer #player.playing #play {
       background: url(../img/pause.svg) no-repeat center center;
       background-size: contain; }
+    footer #player.noSound #play {
+      opacity: 0.3; }
     footer #player #play {
       width: 40px;
       height: 40px;
@@ -387,6 +389,6 @@ footer {
       height: 100%;
       position: absolute;
       background-color: #CFD8DC;
-      opacity: 0.9; }
+      opacity: 0.6; }
 
 /*# sourceMappingURL=styles.css.map */
