@@ -60,6 +60,8 @@ function addPiste(){
     $("#overlay").fadeOut();
   });
   $("#overlay-submit").on("click",function(){
+    $("#search-result").html("");
+    $("#overlay-input").val("");
     $.ajax({
       url: 'https://api.soundcloud.com/tracks.json?client_id='+client_id+'&q='+$("#overlay-input").val()+'&limit=20'
     })
@@ -79,6 +81,8 @@ function addPiste(){
         $("#overlay").fadeOut();
         addTrackYo(trackClicked);
         alreadyVoted.push(trackClicked.trackID);
+        $("#search-result").html("");
+        $("#overlay-input").val("");
       });
     })
     .fail(function() {
@@ -95,7 +99,7 @@ function returnFalseBubble(){
 
 function addBubble(track){
   var _this = track;
-  $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.trackTitle+" data-trackArtist="+_this.trackArtist+" data-trackDuration="+_this.trackDuration+"><div class='bubble-container'><div class='bubble-artist'>"+_this.trackArtist+"</div><div class='bubble-title'>"+_this.trackTitle+"</div><div class='bubble-vote'>"+_this.trackVotes+"</div><div class='bubble-vote-action'><em></em><em></em></div></div></div>");
+  $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.trackTitle+" data-trackArtist="+_this.trackArtist+" data-trackDuration="+_this.trackDuration+"><div class='bubble-container'><div class='bubble-artist'>"+_this.trackArtist+"</div><div class='bubble-title'>"+_this.trackTitle+"</div><div class='bubble-vote-action'><div class='bubble-vote'>"+_this.trackVotes+"</div><em></em><em></em></div></div></div>");
   TweenMax.to($(".bubble"),0.5,{
     scale:1,
     ease:Quad.EaseIn
@@ -257,7 +261,7 @@ function getFromSoundCloud(soundID){
       $("#clickToAdd").fadeIn();
     }else{
       $("#clickToAdd").fadeOut();
-      $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.title+" data-trackArtist="+_this.artist+" data-trackDuration="+_this.duration+"><div class='bubble-container'><div class='bubble-artist'>"+_this.artist+"</div><div class='bubble-title'>"+_this.title+"</div><div class='bubble-vote'>1</div><div class='bubble-vote-action'><em></em><em></em></div></div></div>");
+      $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.title+" data-trackArtist="+_this.artist+" data-trackDuration="+_this.duration+"><div class='bubble-container'><div class='bubble-artist'>"+_this.artist+"</div><div class='bubble-title'>"+_this.title+"</div><div class='bubble-vote-action'><div class='bubble-vote'>1</div><em></em><em></em></div></div></div>");
       TweenMax.to($(".bubble"),0.5,{
         scale:1,
         ease:Quad.EaseIn
