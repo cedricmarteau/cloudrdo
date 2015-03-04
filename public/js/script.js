@@ -29,7 +29,7 @@ function init(){
   socket.on("listTrack",function(array){
     console.log("listTrack",array)
     if (array.length > 1){
-      for (var i = 1; i < array.length; i++) {
+      for (var i = 0; i < array.length; i++) {
         var self = array[i];
         console.log(self)
         SC.get(api+"/tracks/"+self.trackID, function(track){
