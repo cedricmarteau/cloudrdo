@@ -264,3 +264,7 @@ function getFromSoundCloud(soundID){
     }
   });
 };
+
+function bubblePosition(){
+  
+};

@@ -271,45 +271,13 @@ section {
       width: 200px;
       height: 200px;
       border-radius: 50%;
-      position: absolute;
-      top: 0;
-      left: 0;
+      display: inline-block;
       background-color: #B6B6B6;
       -webkit-transform: scale(0);
       -moz-transform: scale(0);
       -ms-transform: scale(0);
       -o-transform: scale(0);
       transform: scale(0); }
-      section #main .bubble:first-child {
-        top: 5%;
-        left: 5%; }
-      section #main .bubble:nth-child(2) {
-        top: 15%;
-        left: 15%; }
-      section #main .bubble:nth-child(3) {
-        top: 25%;
-        left: 25%; }
-      section #main .bubble:nth-child(4) {
-        top: 35%;
-        left: 35%; }
-      section #main .bubble:nth-child(5) {
-        top: 45%;
-        left: 45%; }
-      section #main .bubble:nth-child(6) {
-        top: 55%;
-        left: 55%; }
-      section #main .bubble:nth-child(7) {
-        top: 65%;
-        left: 65%; }
-      section #main .bubble:nth-child(8) {
-        top: 75%;
-        left: 75%; }
-      section #main .bubble:nth-child(9) {
-        top: 85%;
-        left: 85%; }
-      section #main .bubble:nth-child(10) {
-        top: 95%;
-        left: 95%; }
       section #main .bubble .bubble-container {
         width: 90%;
         position: absolute;
