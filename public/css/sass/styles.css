@@ -273,6 +273,7 @@ section {
     section #main .bubble {
       width: 200px;
       height: 200px;
+      margin: 20px;
       border-radius: 50%;
       display: inline-block;
       background-color: #B6B6B6;
