@@ -30,10 +30,11 @@ io.sockets.on('connection', function(socket){
     console.log("addTrack")
     tracks.push({trackID: data.trackID, trackVotes: 1, trackDuration: data.trackDuration});
     io.sockets.emit("updateAdd", data.trackID);
-    if (currentTrack == null || tracks.length == 0){ //C'est la première chanson ajoutée
+    if (currentTrack == null){ //C'est la première chanson ajoutée
       console.log("currentTrack",data.trackID)
       console.log(data.trackDuration);
       currentTrack = data.trackID;
+      tracks.splice(0, 1);
       playingTimer(data.trackDuration)
     }
   });
@@ -68,7 +69,13 @@ function playingTimer(timing){
      io.sockets.emit("currentTiming", {percentPosition:(currentTiming*100)/initialTiming,positionMS:tempDuration});
    }else{
      clearInterval(timerInterval);
-     nextSound();
+      if (tracks.length > 0)
+        nextSound();
+      else
+      {
+        currentTrack = null;
+        io.sockets.emit("nextSound", "noID");
+      }
    }
  },1000);
 }
@@ -90,16 +97,12 @@ function nextSound(){
       console.log("Max = " + id);
    }
  }
- tracks.splice(iTmp, 1);
- if (tracks.length > 0){
-   currentTrack = id;
-   io.sockets.emit("nextSound", id);
-   console.log("TIME : " + time)
+  tracks.splice(iTmp, 1);
+  currentTrack = id;
+  io.sockets.emit("nextSound", id);
+  console.log("TIME : " + time)
+ //if (tracks.length > 0)
    playingTimer(time);
- }else{
-  currentTrack = null;
-  io.sockets.emit("nextSound", "noID");
- }
 }
 
 server.listen(port, function(){
