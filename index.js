@@ -89,9 +89,9 @@ function nextSound(){
    }
  }
  tracks.splice(iTmp, 1);
-
- io.sockets.emit("nextSound", id);
  if (tracks.length > 0){
+   currentTrack = id;
+   io.sockets.emit("nextSound", id);
    playingTimer(time);
  }
 }

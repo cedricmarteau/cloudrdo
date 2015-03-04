@@ -6,7 +6,7 @@ var client_id = "45543d60298a07d51ca66c31835dfa26",
 var currentSound = {};
 var currentSoundPosition = {percentPosition:0,positionMS:0};
 var alreadyVoted = [];
-var noCurrentSound = false;
+var noCurrentSound = true;
 
 init();
 addPiste();
@@ -20,29 +20,31 @@ function init(){
   socket.on("currentTrack",function(trackFromNode){
     console.log("currentTrack",trackFromNode)
     if (trackFromNode != null){
-      noCurrentSound = false;
       streamFromSoundCloud(trackFromNode);
     }else{
-      noCurrentSound = true;
       $("#clickToAdd").fadeIn();
     }
   });
   socket.on("listTrack",function(array){
     console.log("listTrack",array)
-    $.each(array,function(){
-      var self = this;
-      console.log(self)
-      SC.get(api+"/tracks/"+self.trackID, function(track){
-        var sound = {
-          trackID : track.id,
-          trackArtist : track.user.username,
-          trackTitle : track.title,
-          trackDuration : track.duration,
-          trackVotes : self.trackVotes
-        };
-        addBubble(sound);
-      });
-    });
+    if (array.length > 1){
+      for (var i = 1; i < array.length; i++) {
+        var self = array[i];
+        console.log(self)
+        SC.get(api+"/tracks/"+self.trackID, function(track){
+          var sound = {
+            trackID : track.id,
+            trackArtist : track.user.username,
+            trackTitle : track.title,
+            trackDuration : track.duration,
+            trackVotes : self.trackVotes
+          };
+          addBubble(sound);
+        });
+      };  
+    }else{
+      $("#clickToAdd").fadeIn();
+    }
   });
 };
 
@@ -75,11 +77,7 @@ function addPiste(){
         };
         $("#overlay").fadeOut();
         addTrackYo(trackClicked);
-        $("#clickToAdd").fadeOut();
         alreadyVoted.push(trackClicked.trackID);
-        if ($(".bubble").length < 2){
-          streamFromSoundCloud(trackClicked.trackID);
-        }
       });
     })
     .fail(function() {
@@ -105,9 +103,6 @@ function addBubble(track){
   clickBubble();
   $("#search-result").html("");
   $("#overlay-input").val("");
-  if (noCurrentSound){
-    noCurrentSound = false;
-  }
 }
 
 function clickBubble(){
@@ -140,8 +135,10 @@ function handler(){
     }else{
       $("#player").addClass('playing');
       currentSound.sound.setPosition(currentSoundPosition.positionMS);
-      console.log(currentSoundPosition.positionMS)
-      currentSound.sound.play();
+      // currentSound.sound._onload(function(){
+        console.log(currentSoundPosition.positionMS)
+        currentSound.sound.play();
+      // })
     }
   });
 }
@@ -166,13 +163,15 @@ function listener(){
     $("div[data-trackid="+soundData.id+"]").find(".bubble-vote").html(soundData.trackVotes);
   });
   socket.on('currentTiming',function(soundPos){
-    console.log(soundPos)
+    // console.log(soundPos)
     currentSoundPosition = soundPos;
     $("#waveform_progress").css({
       width:100-currentSoundPosition.percentPosition+"%"
     });
   });
   socket.on('nextSound',function(nextSoundID){
+    console.log("nextSound",nextSoundID)
+    streamFromSoundCloud(nextSoundID);
     TweenMax.to($("div[data-trackid="+nextSoundID.id+"]"),0.5,{
       scale:0,
       ease:Quad.EaseIn,
@@ -196,10 +195,10 @@ function streamFromSoundCloud(soundID){
       artist : _track.user.username,
       duration : _track.duration,
       url : "/tracks/"+soundID
-      // waveImg : _track.waveform_url
     };
     $("#player-title").html(currentSound.title);
     $("#player-artist").html(currentSound.artist);
+    noCurrentSound = false;
     SC.stream(api+currentSound.url, function(sound){
       currentSound.sound = sound;
       handler();
@@ -224,10 +223,16 @@ function getFromSoundCloud(soundID){
       url : "/tracks/"+soundID
     };
     console.log("sound",_this,_this.trackID)
-    $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.title+" data-trackArtist="+_this.artist+" data-trackDuration="+_this.duration+"><div class='bubble-container'><div class='bubble-artist'>"+_this.artist+"</div><div class='bubble-title'>"+_this.title+"</div><div class='bubble-vote'>1</div><div class='bubble-vote-action'><em></em><em></em></div></div></div>");
-    TweenMax.to($(".bubble"),0.5,{
-      scale:1,
-      ease:Quad.EaseIn
-    });
+    if (noCurrentSound){
+      streamFromSoundCloud(_this.trackID);
+      $("#clickToAdd").fadeIn();
+    }else{
+      $("#clickToAdd").fadeOut();
+      $("#main").append("<div class='bubble' data-trackID="+_this.trackID+" data-trackTitle="+_this.title+" data-trackArtist="+_this.artist+" data-trackDuration="+_this.duration+"><div class='bubble-container'><div class='bubble-artist'>"+_this.artist+"</div><div class='bubble-title'>"+_this.title+"</div><div class='bubble-vote'>1</div><div class='bubble-vote-action'><em></em><em></em></div></div></div>");
+      TweenMax.to($(".bubble"),0.5,{
+        scale:1,
+        ease:Quad.EaseIn
+      });
+    }
   });
 };
