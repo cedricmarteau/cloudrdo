@@ -97,7 +97,8 @@ function nextSound(){
    console.log("TIME : " + time)
    playingTimer(time);
  }else{
-   io.sockets.emit("nextSound", "noID");
+  currentTrack = null;
+  io.sockets.emit("nextSound", "noID");
  }
 }
 
