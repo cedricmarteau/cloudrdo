@@ -25,16 +25,16 @@ io.sockets.on('connection', function(socket){
   console.log('a user connected');
   socket.emit("listTrack", tracks);
   socket.emit("currentTrack", currentTrack);
-  
+
   socket.on('addTrack', function(data){
     console.log("addTrack")
     tracks.push({trackID: data.trackID, trackVotes: 1, trackDuration: data.trackDuration});
     io.sockets.emit("updateAdd", data.trackID);
-    if (currentTrack == null){ //C'est la première chanson ajoutée
+    if (currentTrack == null || tracks.length == 0){ //C'est la première chanson ajoutée
       console.log("currentTrack",data.trackID)
       console.log(data.trackDuration);
-      playingTimer(data.trackDuration)
       currentTrack = data.trackID;
+      playingTimer(data.trackDuration)
     }
   });
 
@@ -87,12 +87,14 @@ function nextSound(){
       id = tracks[i].trackID;
       time = tracks[i].trackDuration;
       iTmp = i;
+      console.log("Max = " + id);
    }
  }
  tracks.splice(iTmp, 1);
  if (tracks.length > 0){
    currentTrack = id;
    io.sockets.emit("nextSound", id);
+   console.log("TIME : " + time)
    playingTimer(time);
  }
 }
