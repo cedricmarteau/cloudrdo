@@ -28,7 +28,7 @@ function init(){
   });
   socket.on("listTrack",function(array){
     console.log("listTrack",array)
-    if (array.length > 1){
+    if (array.length > 0){
       for (var i = 0; i < array.length; i++) {
         var self = array[i];
         console.log(self)
